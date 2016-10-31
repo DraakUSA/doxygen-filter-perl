@@ -52,6 +52,7 @@ my $hValidStates = {
 
 our %SYSTEM_PACKAGES = map({ $_ => 1 } qw(
     base
+    parent
     warnings
     strict
     Exporter
@@ -281,10 +282,10 @@ sub ProcessFile
                 my $expr = $3;
                 if (defined($sIncludeModule)) 
                 {
-                    #unless ($sIncludeModule eq "strict" || $sIncludeModule eq "warnings" || $sIncludeModule eq "vars" || $sIncludeModule eq "Exporter" || $sIncludeModule eq "base") 
-                    if ($sIncludeModule =~ m/^(base|strict|warnings|vars|Exporter)$/)
+                    #unless ($sIncludeModule eq "strict" || $sIncludeModule eq "warnings" || $sIncludeModule eq "vars" || $sIncludeModule eq "Exporter" || $sIncludeModule eq "base" || $sIncludeModule eq "parent") 
+                    if ($sIncludeModule =~ m/^(base|parent|strict|warnings|vars|Exporter)$/)
                     {
-                        if ($sIncludeModule eq "base")
+                        if ($sIncludeModule eq "base" || $sIncludeModule eq "parent")
                         {
                             my @isa = eval($expr);
                             push(@{$self->GetCurrentClass()->{inherits}}, _FilterOutSystemPackages(@isa)) unless ($@);
